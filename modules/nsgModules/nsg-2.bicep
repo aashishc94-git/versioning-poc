@@ -12,7 +12,7 @@ param port8080 string = '8080'
 param directionInbound string = 'Inbound'
 param directionOutbound string = 'Outbound'
 param protocolTcp string = 'TCP'
-module nsg2 '../network-sec-grp.bicep' = {
+module nsg2 '../networkModules/network-sec-grp.bicep' = {
   name: 'nsg2'
   params: {
     location: location
@@ -20,7 +20,7 @@ module nsg2 '../network-sec-grp.bicep' = {
   }
 }
 
-module nsg2Rule1InboundSubnet1 '../network-sec-grp-rules.bicep' = {
+module nsg2Rule1InboundSubnet1 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg2Rule1InboundSubnet1'
   dependsOn:[
     nsg2
@@ -43,7 +43,7 @@ module nsg2Rule1InboundSubnet1 '../network-sec-grp-rules.bicep' = {
   }
 }
 
-module nsg2Rule2InboundSubnet3 '../network-sec-grp-rules.bicep' = {
+module nsg2Rule2InboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg2Rule2InboundSubnet3'
   dependsOn:[
     nsg2
@@ -66,7 +66,7 @@ module nsg2Rule2InboundSubnet3 '../network-sec-grp-rules.bicep' = {
   }
 }
 
-module nsg2Rule3OutboundSubnet1 '../network-sec-grp-rules.bicep' = {
+module nsg2Rule3OutboundSubnet1 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg2Rule3OutboundSubnet1'
   dependsOn:[
     nsg2
@@ -89,7 +89,7 @@ module nsg2Rule3OutboundSubnet1 '../network-sec-grp-rules.bicep' = {
   }
 }
 
-module nsg2Rule4OutboundSubnet3 '../network-sec-grp-rules.bicep' = {
+module nsg2Rule4OutboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg2Rule4OutboundSubnet3'
   dependsOn:[
     nsg2

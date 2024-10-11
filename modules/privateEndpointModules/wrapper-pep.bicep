@@ -1,0 +1,48 @@
+//wrapper-pep.bicep
+
+param privateEndpointName string
+param location string
+param subnetId string
+param groupId string
+param resourceId string
+param networkInterfaceName string
+
+param privateDnsZoneName string
+param privateDnsConfigName string
+
+param vnetId string
+
+module privateEndPoint 'private-endpoint.bicep' = {
+  name: 'privateEndPoint'
+  params: {
+    location: location
+    groupId: groupId
+    networkInterfaceName: networkInterfaceName
+    privateEndpointName: privateEndpointName
+    resourceId: resourceId
+    subnetId: subnetId
+  }
+}
+
+module privateDnsZoneResources 'private-Dns-zone.bicep' = {
+  name: 'privateDnsZoneResources'
+  dependsOn: [
+    privateEndPoint
+  ]
+  params: {
+    privateDnsConfigName: privateDnsConfigName // add http
+    privateDnsZoneName: privateDnsZoneName //add http 
+    privateEndpointName: privateEndpointName
+  }
+}
+
+module vnetLink 'vnet-link.bicep' = {
+  name: 'vnetLink'
+  dependsOn:[
+    privateDnsZoneResources
+  ]
+  params: {
+    privateDnsZoneName: privateDnsZoneName
+    vnetId: vnetId
+  }
+}

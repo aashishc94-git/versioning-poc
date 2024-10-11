@@ -1,0 +1,78 @@
+#infra-deployment.yml
+ 
+trigger: none # Triggered defined none;deployment manual
+
+name: "${{parameters.enviroment}} infra deployment" 
+parameters:
+- name: enviorment
+  displayName: "Enviorment"
+  type: string
+  default: dev
+  values:
+  - "dev"
+  - "stage"
+  - "prod"
+
+variables:
+ - template: ${{format('../../env/{0}/config.yml', parameters.enviroment) }}
+ - name: paramsJSON
+   value: ${{format('../../env/{0}/params-infra.json', parameters.enviroment) }}
+
+pool: 
+  vmImage: ubuntu-latest
+
+stages:
+ - stage: Lint
+   displayName: Run Lint 
+   jobs:
+    - job: LintJob
+      displayName: Lint Job
+      steps: 
+       - checkout: self
+       - task: AzureCli@2
+         name: Linting
+         displayName: Linting
+         inputs:
+          azureSubscription: $(serviceConnectionName)
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+           az bicep build --file ../../bicep/main/main-infra.bicep
+
+ - stage: Validate 
+   displayName: Run Validate
+   jobs: 
+    - job:
+      displayName:
+      steps:
+       - checkout: self
+       - task: AzureCli@2
+         name: Validating
+         displayName: Validating
+         inputs:
+          azureSubscription: $(serviceConnectionName)
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+           az deployment group validate --resource-group $(resourceGroupName) \
+           --template-file ../../bicep/main/main-infra.bicep \
+           --parameters ../../env/${{parameters.enviorment}}/params-infra.json
+
+ - stage: Deploy 
+   displayName: Run Deploy
+   jobs:    
+    - job:
+      displayName:
+      steps:
+       - checkout: self
+       - task: AzureCli@2
+        name: Deploying
+        displayName: Deploying
+        inputs:
+         azureSubscription: $(serviceConnectionName)
+         scriptType: 'bash'
+         scriptLocation: 'inlineScript'
+         inlineScripts: |
+           az deployment group create --resource-group$(resourceGroupName) \
+           --template-file ../../bicep/main/main-infra.bicep \
+           --parameters ../../env/${{parameters.enviorment}}/params-infra.json     

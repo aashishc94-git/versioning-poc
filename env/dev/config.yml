@@ -1,0 +1,5 @@
+#config.yml
+
+variables:
+ resourceGroupName: Z_COP_DevOps_Dev
+ serviceConnectionName: SC_Dev

@@ -13,7 +13,7 @@ param directionInbound string = 'Inbound'
 param directionOutbound string = 'Outbound'
 param protocolTcp string = 'TCP'
 
-module nsg1 '../network/network-sec-grp.bicep' = {
+module nsg1 '../networkModules/network-sec-grp.bicep' = {
   name: 'nsg1'
   params: {
     location: location
@@ -21,7 +21,7 @@ module nsg1 '../network/network-sec-grp.bicep' = {
   }
 }
 
-module nsg1Rule1InboundSubnet2 '../network/network-sec-grp-rules.bicep' = {
+module nsg1Rule1InboundSubnet2 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg1Rule1InboundSubnet2'
   dependsOn:[
     nsg1
@@ -44,7 +44,7 @@ module nsg1Rule1InboundSubnet2 '../network/network-sec-grp-rules.bicep' = {
   }
 }
 
-module nsg1Rule2InboundSubnet3 '../network/network-sec-grp-rules.bicep' = {
+module nsg1Rule2InboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg1Rule2InboundSubnet3'
   dependsOn:[
     nsg1
@@ -67,7 +67,7 @@ module nsg1Rule2InboundSubnet3 '../network/network-sec-grp-rules.bicep' = {
   }
 }
 
-module nsg1Rule3OutboundSubnet2 '../network/network-sec-grp-rules.bicep' = {
+module nsg1Rule3OutboundSubnet2 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg1Rule3OutboundSubnet2'
   dependsOn:[
     nsg1
@@ -90,7 +90,7 @@ module nsg1Rule3OutboundSubnet2 '../network/network-sec-grp-rules.bicep' = {
   }
 }
 
-module nsg1Rule4OutboundSubnet3 '../network/network-sec-grp-rules.bicep' = {
+module nsg1Rule4OutboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg1Rule4OutboundSubnet3'
   dependsOn:[
     nsg1

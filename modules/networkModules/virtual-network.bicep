@@ -75,6 +75,3 @@ output subnet3AddressPrefix string = virtualNetwork.properties.subnets[2].proper
 output subnet4Id string = virtualNetwork.properties.subnets[3].id
 output subnet4Name string = virtualNetwork.properties.subnets[3].name
 output subnet4AddressPrefix string = virtualNetwork.properties.subnets[3].properties.addressPrefix
-
-
-

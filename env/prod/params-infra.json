@@ -22,6 +22,15 @@
       },
       "subnet4AddressPrefix": {
         "value": "10.3.4.0/26"
+      },
+      "adminUserName" : {
+        "value": "azureuser"
+      },
+      "adminPassword" : {
+        "value": "Shhhh..Secret@2"
+      },
+      "vmSize" : {
+        "value": "Standard_D2as_v4"
       }
     }
 }
