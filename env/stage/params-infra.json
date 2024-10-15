@@ -18,7 +18,7 @@
         "value": "10.2.2.0/24"
       },
       "subnet3AddressPrefix": {
-        "value": "10.2.3.0/23"
+        "value": "10.2.3.0/24"
       },
       "subnet4AddressPrefix": {
         "value": "10.2.4.0/26"

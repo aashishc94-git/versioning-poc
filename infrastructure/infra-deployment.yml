@@ -2,7 +2,7 @@
  
 trigger: none # Triggered defined none;deployment manual
 
-name: "${{parameters.enviroment}} infra deployment" 
+name: "$(Date:yyyyMMdd)-${{parameters.enviroment}} infra deployment" 
 parameters:
 - name: enviorment
   displayName: "Enviorment"

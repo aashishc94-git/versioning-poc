@@ -16,7 +16,7 @@ module privateEndPoint 'private-endpoint.bicep' = {
   name: 'privateEndPoint'
   params: {
     location: location
-    groupId: groupId
+    groupId: groupId // https://blog.blksthl.com/2023/03/22/the-complete-list-of-groupids-for-private-endpoint-privatelink-service-connection/
     networkInterfaceName: networkInterfaceName
     privateEndpointName: privateEndpointName
     resourceId: resourceId

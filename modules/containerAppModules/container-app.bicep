@@ -4,14 +4,13 @@ param containerAppName string
 param location string
 param managedIdentityName string
 param containerAppEnvName string
-param containerRegistry string
 param containerImageName string
 param containerAppCpu string
 param containerAppMemory string 
 
 param containerRegistryName string
 param containerRegisterServer string = '${containerRegistryName}.azurecr.io'
-param imageFullName string = '${containerRegistryName}.azurecr.io/${containerImageName}'
+param imageFullName string = '${containerRegisterServer}/${containerImageName}:latest'
 
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
   name: managedIdentityName
@@ -50,19 +49,14 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
     template: {
       containers: [
         {
-          name: imageFullName
-          image: containerImageName
+          name: containerAppName
+          image: imageFullName
           resources: {
             cpu: json(containerAppCpu)
             memory: containerAppMemory
           }
         }
       ]
-      // scale container app using replicas
-      scale: {
-        minReplicas: 1
-        maxReplicas: 3
-      }
     }
   }
 }
