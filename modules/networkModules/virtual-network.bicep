@@ -13,6 +13,9 @@ param subnet2AddressPrefix string
 param subnet3AddressPrefix string
 param subnet4AddressPrefix string
 
+param nsg1Id string
+param nsg2Id string
+param nsg3Id string
 
 resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
   name: vnetName
@@ -28,12 +31,20 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
         name: subnet1Name
         properties: {
           addressPrefix: subnet1AddressPrefix
+          networkSecurityGroup: {
+            id: nsg1Id
+          }
+          privateEndpointNetworkPolicies: 'Enabled'
+          privateLinkServiceNetworkPolicies: 'Disabled'
         }
       }
       {
         name: subnet2Name
         properties: {
           addressPrefix: subnet2AddressPrefix
+          networkSecurityGroup: {
+            id: nsg2Id
+          }
           serviceEndpoints: [
             {
               service: 'Microsoft.ContainerRegistry'
@@ -45,6 +56,9 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2019-11-01' = {
         name: subnet3Name
         properties: {
           addressPrefix: subnet3AddressPrefix
+          networkSecurityGroup: {
+            id: nsg3Id
+          }
         }
       }
       {

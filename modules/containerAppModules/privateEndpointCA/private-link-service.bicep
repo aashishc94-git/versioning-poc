@@ -3,8 +3,7 @@ param privateLinkServiceName string
 param location string
 param subnetName string
 param subnetId string
-param loadbalancerName string 
-param loadBalancerFrontEndIpConfigurationName string
+param loadBalancerFrontEndIpConfigurationId string
 
 resource privateLinkService 'Microsoft.Network/privateLinkServices@2021-05-01' = {
   name: privateLinkServiceName
@@ -13,7 +12,7 @@ resource privateLinkService 'Microsoft.Network/privateLinkServices@2021-05-01' =
     enableProxyProtocol: false
     loadBalancerFrontendIpConfigurations: [
       {
-        id: resourceId('Microsoft.Network/loadBalancers/frontendIpConfigurations', loadbalancerName, loadBalancerFrontEndIpConfigurationName)
+        id: loadBalancerFrontEndIpConfigurationId
       }
     ]
     ipConfigurations: [

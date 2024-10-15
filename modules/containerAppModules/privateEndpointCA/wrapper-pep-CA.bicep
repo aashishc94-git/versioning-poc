@@ -4,21 +4,24 @@ param privateLinkServiceName string
 param location string
 param subnetName string
 param subnetId string
-param loadbalancerName string 
-param loadBalancerFrontEndIpConfigurationName string
-
 param networkInterfaceName string
 param privateEndpointName string
 
 param domainNameCae string
+param domainPrefixCae string = split(domainNameCae,'.')[0]
 param vnetId string
+param kubernetesInternalLBName string = 'kubernetes-internal'
+param caeInternalResourceGroupName string = 'MC_${domainPrefixCae}-rg_${domainPrefixCae}_${location}'
 
+resource kubernetesInternalLB 'Microsoft.Network/loadBalancers@2024-01-01' existing = {
+  name: kubernetesInternalLBName
+  scope: resourceGroup(caeInternalResourceGroupName)
+}
 module privateLinkService 'private-link-service.bicep' = {
   name: 'privateLinkService'
   params: {
     location: location
-    loadBalancerFrontEndIpConfigurationName: loadBalancerFrontEndIpConfigurationName
-    loadbalancerName: loadbalancerName
+    loadBalancerFrontEndIpConfigurationId: kubernetesInternalLB.properties.frontendIPConfigurations[0].id
     privateLinkServiceName: privateLinkServiceName
     subnetId: subnetId
     subnetName: subnetName

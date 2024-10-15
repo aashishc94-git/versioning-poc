@@ -3,10 +3,10 @@ param location string
 param containerRegistryName string
 param publicNetworkAccessCR string
 
-resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-06-01-preview' = {
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
   name: containerRegistryName
-  location: location
-  sku: {
+  location: location  
+  sku:{
     name: 'Premium'
   }
   properties: {

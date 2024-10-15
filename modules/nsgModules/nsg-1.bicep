@@ -1,6 +1,5 @@
 //nsg-1.bicep
 
-param location string
 param nsgName string
 param subnet1Address string
 param subnet2Address string
@@ -13,18 +12,22 @@ param directionInbound string = 'Inbound'
 param directionOutbound string = 'Outbound'
 param protocolTcp string = 'TCP'
 
-module nsg1 '../networkModules/network-sec-grp.bicep' = {
-  name: 'nsg1'
-  params: {
-    location: location
-    nsgName: nsgName
-  }
+// module nsg1 '../networkModules/network-sec-grp.bicep' = {
+//   name: 'nsg1'
+//   params: {
+//     location: location
+//     nsgName: nsgName
+//   }
+// }
+resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019-11-01' existing = {
+  name: nsgName
 }
+
 
 module nsg1Rule1InboundSubnet2 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg1Rule1InboundSubnet2'
   dependsOn:[
-    nsg1
+    networkSecurityGroup
   ]
   params: {
     access: accessAllow
@@ -34,7 +37,8 @@ module nsg1Rule1InboundSubnet2 '../networkModules/network-sec-grp-rules.bicep' =
     destinationPortRange: port8080
     destinationPortRanges: []
     direction: directionInbound
-    networkSecurityGroupName: nsg1.outputs.nsgName
+    networkSecurityRuleName: 'nsg1Rule1InboundSubnet2'
+    nsgName:nsgName
     priority: 100
     protocol: protocolTcp
     sourceAddressPrefix: subnet2Address
@@ -47,7 +51,7 @@ module nsg1Rule1InboundSubnet2 '../networkModules/network-sec-grp-rules.bicep' =
 module nsg1Rule2InboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg1Rule2InboundSubnet3'
   dependsOn:[
-    nsg1
+    networkSecurityGroup
   ]
   params: {
     access: accessAllow
@@ -57,7 +61,8 @@ module nsg1Rule2InboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' =
     destinationPortRange: port8080
     destinationPortRanges: []
     direction: directionInbound
-    networkSecurityGroupName: nsg1.outputs.nsgName
+    networkSecurityRuleName: 'nsg1Rule2InboundSubnet3'
+    nsgName:nsgName
     priority: 110
     protocol: protocolTcp
     sourceAddressPrefix: subnet3Address
@@ -70,7 +75,7 @@ module nsg1Rule2InboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' =
 module nsg1Rule3OutboundSubnet2 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg1Rule3OutboundSubnet2'
   dependsOn:[
-    nsg1
+    networkSecurityGroup
   ]
   params: {
     access: accessAllow
@@ -80,7 +85,8 @@ module nsg1Rule3OutboundSubnet2 '../networkModules/network-sec-grp-rules.bicep' 
     destinationPortRange: port8080
     destinationPortRanges: []
     direction: directionOutbound
-    networkSecurityGroupName: nsg1.outputs.nsgName
+    networkSecurityRuleName: 'nsg1Rule3OutboundSubnet2'
+    nsgName:nsgName
     priority: 120
     protocol: protocolTcp
     sourceAddressPrefix: subnet1Address
@@ -93,7 +99,7 @@ module nsg1Rule3OutboundSubnet2 '../networkModules/network-sec-grp-rules.bicep' 
 module nsg1Rule4OutboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' = {
   name: 'nsg1Rule4OutboundSubnet3'
   dependsOn:[
-    nsg1
+    networkSecurityGroup
   ]
   params: {
     access: accessAllow
@@ -103,7 +109,8 @@ module nsg1Rule4OutboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' 
     destinationPortRange: port8080
     destinationPortRanges: []
     direction: directionOutbound
-    networkSecurityGroupName: nsg1.outputs.nsgName
+    networkSecurityRuleName: 'nsg1Rule4OutboundSubnet3'
+    nsgName:nsgName
     priority: 130
     protocol: protocolTcp
     sourceAddressPrefix: subnet1Address
@@ -113,6 +120,6 @@ module nsg1Rule4OutboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' 
   }
 }
 
-output nsg1Name string = nsg1.name
-output nsg1Id string = nsg1.outputs.nsgID
+// output nsg1Name string = nsg1.name
+// output nsg1Id string = nsg1.outputs.nsgID
 

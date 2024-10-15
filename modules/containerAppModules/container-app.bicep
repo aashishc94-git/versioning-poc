@@ -6,8 +6,12 @@ param managedIdentityName string
 param containerAppEnvName string
 param containerRegistry string
 param containerImageName string
-param containerAppCpu int
+param containerAppCpu string
 param containerAppMemory string 
+
+param containerRegistryName string
+param containerRegisterServer string = '${containerRegistryName}.azurecr.io'
+param imageFullName string = '${containerRegistryName}.azurecr.io/${containerImageName}'
 
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
   name: managedIdentityName
@@ -33,7 +37,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
     configuration: {
       registries: [
         {
-          server: containerRegistry
+          server: containerRegisterServer
           identity: managedIdentity.id
         }
       ]
@@ -46,10 +50,10 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
     template: {
       containers: [
         {
-          name: containerAppName
+          name: imageFullName
           image: containerImageName
           resources: {
-            cpu: containerAppCpu
+            cpu: json(containerAppCpu)
             memory: containerAppMemory
           }
         }

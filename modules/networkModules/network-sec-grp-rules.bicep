@@ -1,6 +1,7 @@
 //network-sec-grp-rules.bicep
 
-param networkSecurityGroupName string
+param networkSecurityRuleName string
+param nsgName string
 param description string
 param protocol string
 param sourcePortRange string
@@ -16,7 +17,7 @@ param sourceAddressPrefixes array
 param destinationAddressPrefixes array
 
 resource networkSecurityGroupSecurityRule 'Microsoft.Network/networkSecurityGroups/securityRules@2019-11-01' = {
-  name: networkSecurityGroupName
+  name: '${nsgName}/${networkSecurityRuleName}'
   properties: {
     description: description
     protocol: protocol
