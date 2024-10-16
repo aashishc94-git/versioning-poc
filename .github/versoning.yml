@@ -1,4 +1,4 @@
-name: GitVersion CI
+name: "$(Date:yyyyMMdd)-Automatic semantic versioning"
 
 on:
   push:
@@ -6,28 +6,41 @@ on:
       - main
       - 'features/*'
       - 'hotfix/*'
-      - 'release/*'
+      - 'releases/*'
   pull_request:
     branches:
       - main
       - 'features/*'
       - 'hotfix/*'
-      - 'release/*'
+      - 'releases/*'
 
-jobs:
-  gitversion:
-    runs-on: ubuntu-latest
-    
+jobs:  
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - checkout: self
 
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9
+      - task: gitversion/setup@0
+        displayName: Install GitVersion
+        inputs:
+          versionSpec: '5.x'
 
-      - name: Run GitVersion
-        id: gitversion
-        run: gitversion /config .gitversion/gitversion.yml /output json
+      - task: gitversion/execute@0
+        displayName: Determine SemVer  
+        inputs:
+          useConfigFile: True
+          configFilePath: ".azuredevops/gitversion.yml"
 
-      - name: Set version variable
-        run: echo "GIT_VERSION=$(gitversion /config .gitversion/gitversion.yml /showvariable FullSemVer)" >> $GITHUB_ENV
+      - task: AzurCLI@2
+        displayName: Update Build.BuildNumber
+        inputs: 
+          inlineScript: |
+            Write-Host "##vso[task.setvariable variable=newBuildNumber]$(GitVersion.MajorMinorPatch)"
+
+      - task: PowerShell@2
+        displayName: Adding git release tag
+        inputs:
+          targetType: inline
+          script: |
+            git tag -a $("v$(setVariables.newBuildNumber)") -m $("Release $(setVariables.newBuildNumber)")
+            Write-Host "Doing git push.." -ForegroundColor Cyan
+            git push --tags
+            Write-Host "Done." -ForegroundColor Cyan  
