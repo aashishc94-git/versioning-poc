@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Regex pattern for valid commit message
+# Expected format: Task - {ID}: <type>: <subject> where type is feat, fix, chore, etc.
+commit_regex="^Task - [0-9]+: (feat|fix|chore|docs|style|refactor|test|perf): [A-Z].+"
+
+# Get the commit message
+if [[ -f "$1" ]]; then
+  commit_message=$(cat "$1")
+else
+  echo "ERROR: No commit message file provided. Please avoid using the -m option."
+  exit 1
+fi
+
+# Check if the commit message matches the regex
+if ! [[ "$commit_message" =~ $commit_regex ]]; then
+  echo "ERROR: Invalid commit message format."
+  echo ""
+  echo "Please use the following format:"
+  echo "  Task - {ID}: <type>: <subject>"
+  echo "Where {ID} is a numeric task ID, <type> is one of: feat, fix, chore, docs, style, refactor, test, perf,"
+  echo "and <subject> starts with a capital letter and is short and descriptive."
+  exit 1
+fi
