@@ -65,19 +65,6 @@ stages:
       displayName: Deploy Job
       steps:
        - checkout: self
-        # Install GitVersion
-       - task: gitversion/setup@0
-         displayName: Install GitVersion
-         inputs:
-          versionSpec: "5.x"
-
-       - task: GitVersion@5
-         displayName: 'Get Version'
-         inputs:
-           runtime: 'netcore'  # Adjust if needed
-           configFilePath: '.azuredevops/gitversion.yml'
-         name: GetVersion  # Naming the task for later reference
-
        - task: AzureCli@2
          name: Deploying
          displayName: Deploying
@@ -87,14 +74,3 @@ stages:
           scriptLocation: 'inlineScript'
           inlineScripts: |
            az deployment group create --resource-group$(resourceGroupName) --template-file ../../bicep/main/main-infra.bicep --parameters ../../env/${{parameters.enviorment}}/params-infra.json
-           # Capture the result of the deployment
-            if [ $? -eq 0 ]; then
-              echo "Deployment succeeded."
-              echo "Current Version: $(GitVersion.SemVer)"  # Print current version
-              
-              # Increment version logic here
-              echo "Incrementing version..."
-              # Call a script or command to update the version in GitVersion.yml or wherever it is stored.
-            else
-              echo "Deployment failed, version not incremented."
-            fi

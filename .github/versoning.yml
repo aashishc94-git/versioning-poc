@@ -1,0 +1,33 @@
+name: GitVersion CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'features/*'
+      - 'hotfix/*'
+      - 'release/*'
+  pull_request:
+    branches:
+      - main
+      - 'features/*'
+      - 'hotfix/*'
+      - 'release/*'
+
+jobs:
+  gitversion:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9
+
+      - name: Run GitVersion
+        id: gitversion
+        run: gitversion /config .gitversion/gitversion.yml /output json
+
+      - name: Set version variable
+        run: echo "GIT_VERSION=$(gitversion /config .gitversion/gitversion.yml /showvariable FullSemVer)" >> $GITHUB_ENV
