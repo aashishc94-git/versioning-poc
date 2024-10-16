@@ -5,7 +5,6 @@ targetScope = 'resourceGroup' /*Setting target scope of deployment as resource g
 param location string
 param environment string
 param vnetAddressPrefix string
-
 param subnet1AddressPrefix string
 param subnet2AddressPrefix string
 param subnet3AddressPrefix string 
