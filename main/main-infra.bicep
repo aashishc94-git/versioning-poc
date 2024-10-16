@@ -9,7 +9,7 @@ param vnetAddressPrefix string
 
 param subnet1AddressPrefix string //parameterised
 param subnet2AddressPrefix string //parameterised
-param subnet3AddressPrefix string
+param subnet3AddressPrefix string //parameterised
 param subnet4AddressPrefix string
 
 param adminUserName string
