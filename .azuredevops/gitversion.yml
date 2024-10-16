@@ -1,0 +1,27 @@
+next-version: 1.0.0
+mode: ContinuousDelivery
+increment: Inherit
+branches:
+  main:
+    regex: ^master$|^main$
+    mode: ContinuousDelivery
+    increment: Patch # Increment patch version
+    is-release-branch: false
+
+  release:
+    regex: ^releases?[/-]
+    mode: ContinuousDelivery
+    increment: Minor # Increment minor version
+    is-release-branch: true
+
+  feature:
+    regex: ^features?[/-]
+    mode: ContinuousDelivery
+    increment: Inherit # Inherits the increment behavior from the branch it merges into.
+    is-release-branch: false
+
+  hotfix:
+    regex: ^hotfix(es)?[/-]
+    mode: ContinuousDelivery
+    increment: Patch # Increment patch version
+    is-release-branch: false
