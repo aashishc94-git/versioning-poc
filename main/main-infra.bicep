@@ -7,8 +7,8 @@ param environment string
 
 param vnetAddressPrefix string
 
-param subnet1AddressPrefix string
-param subnet2AddressPrefix string
+param subnet1AddressPrefix string //parameterised
+param subnet2AddressPrefix string //parameterised
 param subnet3AddressPrefix string
 param subnet4AddressPrefix string
 
