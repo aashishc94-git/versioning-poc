@@ -1,6 +1,4 @@
 //nsg-3.bicep
-
-param location string
 param nsgName string
 param subnet1Address string
 param subnet2Address string
@@ -13,13 +11,7 @@ param directionInbound string = 'Inbound'
 param directionOutbound string = 'Outbound'
 param protocolTcp string = 'TCP'
 
-// module nsg3 '../networkModules/network-sec-grp.bicep' = {
-//   name: 'nsg3'
-//   params: {
-//     location: location
-//     nsgName: nsgName
-//   }
-// }
+
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019-11-01' existing = {
   name: nsgName
 }

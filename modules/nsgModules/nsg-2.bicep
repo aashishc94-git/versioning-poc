@@ -1,6 +1,4 @@
 //nsg-2.bicep
-
-param location string
 param nsgName string
 param subnet1Address string
 param subnet2Address string
@@ -12,13 +10,7 @@ param port8080 string = '8080'
 param directionInbound string = 'Inbound'
 param directionOutbound string = 'Outbound'
 param protocolTcp string = 'TCP'
-// module nsg2 '../networkModules/network-sec-grp.bicep' = {
-//   name: 'nsg2'
-//   params: {
-//     location: location
-//     nsgName: nsgName
-//   }
-// }
+
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019-11-01' existing = {
   name: nsgName
 }

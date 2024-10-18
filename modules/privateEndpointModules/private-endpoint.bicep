@@ -17,7 +17,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2022-01-01' = {
         properties: {
           privateLinkServiceId: resourceId
           groupIds: [
-            groupId // Add http page
+            groupId
           ]
         }
       }

@@ -98,7 +98,6 @@ module nsg2Rules '../modules/nsgModules/nsg-2.bicep' = {
     nsg2
   ]
   params: {
-    location: location
     nsgName: nsg2.outputs.nsgName
     subnet1Address: virtualNetwork.outputs.subnet1AddressPrefix
     subnet2Address: virtualNetwork.outputs.subnet2AddressPrefix
@@ -115,7 +114,6 @@ module nsg3Rules '../modules/nsgModules/nsg-3.bicep' = {
     nsg3
   ]
   params: {
-    location: location
     nsgName: nsg3.outputs.nsgName
     subnet1Address: virtualNetwork.outputs.subnet1AddressPrefix
     subnet2Address: virtualNetwork.outputs.subnet2AddressPrefix

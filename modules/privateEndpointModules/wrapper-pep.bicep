@@ -30,17 +30,14 @@ module privateDnsZoneResources 'private-Dns-zone.bicep' = {
     privateEndPoint
   ]
   params: {
-    privateDnsConfigName: privateDnsConfigName // add http
-    privateDnsZoneName: privateDnsZoneName //add http 
+    privateDnsConfigName: privateDnsConfigName
+    privateDnsZoneName: privateDnsZoneName
     privateEndpointName: privateEndpointName
   }
 }
 
 module vnetLink 'vnet-link.bicep' = {
   name: 'vnetLink'
-  dependsOn:[
-    privateDnsZoneResources
-  ]
   params: {
     privateDnsZoneName: privateDnsZoneName
     vnetId: vnetId

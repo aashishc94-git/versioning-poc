@@ -12,13 +12,6 @@ param directionInbound string = 'Inbound'
 param directionOutbound string = 'Outbound'
 param protocolTcp string = 'TCP'
 
-// module nsg1 '../networkModules/network-sec-grp.bicep' = {
-//   name: 'nsg1'
-//   params: {
-//     location: location
-//     nsgName: nsgName
-//   }
-// }
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2019-11-01' existing = {
   name: nsgName
 }
@@ -119,7 +112,4 @@ module nsg1Rule4OutboundSubnet3 '../networkModules/network-sec-grp-rules.bicep' 
     sourcePortRanges: []
   }
 }
-
-// output nsg1Name string = nsg1.name
-// output nsg1Id string = nsg1.outputs.nsgID
 

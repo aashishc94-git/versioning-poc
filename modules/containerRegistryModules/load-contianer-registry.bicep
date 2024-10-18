@@ -21,7 +21,7 @@ resource acrDeploy 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     forceUpdateTag: utcValue
     azCliVersion: '2.28.0'
     timeout: 'PT30M'
-    scriptContent: 'az acr import --name ${containerRegistryName} --source mcr.microsoft.com/hello-world --image ${imageName}'
+    scriptContent: 'az acr import --name ${containerRegistryName} --source mcr.microsoft.com --image ${imageName}'
     cleanupPreference: 'OnSuccess'
     retentionInterval: 'P1D'
   }

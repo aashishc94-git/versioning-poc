@@ -14,19 +14,19 @@ module containerRegistry 'container-registry.bicep' = {
   }
 }
 
-// module loadContainerRegistry 'load-contianer-registry.bicep' = {
-//   name: 'loadContainerRegistry'
-//   dependsOn: [
-//     containerRegistry
-//   ]
-//   params: {
-//     location: location
-//     containerRegistryName: containerRegistry.outputs.containerRegistryName
-//     deploymentName: deploymentName
-//     imageName: 'hello-world'
-//     managedIdentityId: managedIdentityId
-//   }
-// }
+module loadContainerRegistry 'load-contianer-registry.bicep' = {
+  name: 'loadContainerRegistry'
+  dependsOn: [
+    containerRegistry
+  ]
+  params: {
+    location: location
+    containerRegistryName: containerRegistry.outputs.containerRegistryName
+    deploymentName: deploymentName
+    imageName: 'k8se/quickstart'
+    managedIdentityId: managedIdentityId
+  }
+}
 
 output containerRegistryName string = containerRegistry.outputs.containerRegistryName
 output containerRegistryId string = containerRegistry.outputs.containerRegistryId
