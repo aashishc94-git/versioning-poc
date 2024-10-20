@@ -143,22 +143,10 @@ module containerRegistryWrapper '../modules/containerRegistryModules/wrapper-con
     containerRegisteryName: 'crcopdevops${environment}'
     deploymentName: 'deployHelloWorldAcr-${environment}'
     managedIdentityId: identity.outputs.managedIdentityId
+    principalId:identity.outputs.managedIdentityPrincipaltId
   }
 }
 
-/*Encapsulating assignment of acr pull and push role to manage identity over container registery*/
-
-module managedIdentityWrapper '../modules/managedIdentityModules/wrapper-managed-identity.bicep' = {
-  name: 'managedIdentityWrapper'
-  dependsOn:[
-    containerRegistryWrapper
-    identity
-  ]
-  params: {
-    containerRegistryName: containerRegistryWrapper.outputs.containerRegistryName
-    principalId: identity.outputs.managedIdentityPrincipaltId
-  }
-}
 /*Encapsulating creating of private endpoint , private DNS and vnet link for container registry*/
 
 module privateEndpointContainerRegistry '../modules/privateEndpointModules/wrapper-pep.bicep' = {
