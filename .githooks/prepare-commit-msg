@@ -4,7 +4,7 @@
 if [[ -f "$1" ]]; then
   commit_message=$(cat "$1")
 else
-  echo "ERROR: No commit message file provided. Please avoid using the -m option."
+  echo "ERROR: Please provide a commit message."
   exit 1
 fi
 
@@ -12,7 +12,7 @@ fi
 branch_name=$(git rev-parse --abbrev-ref HEAD)
 
 # Define regex patterns for commit messages based on branch types
-task_commit_regex="^Task - [0-9]+: (feat|fix|chore|docs|style|refactor|test|perf): [A-Z].+"
+task_commit_regex="^Task - [0-9]+: (feat|fix|docs|style|refactor|test|perf): [A-Z].+"
 release_commit_regex="^Release - [0-9]+: (major|minor|patch): [A-Z].+"
 hotfix_commit_regex="^Hotfix - [0-9]+: (feat|patch): [A-Z].+"
 
@@ -24,7 +24,7 @@ if [[ "$branch_name" =~ ^features/.* ]]; then
         echo ""
         echo "Please use the following format:"
         echo "  Task - {ID}: <type>: <subject>"
-        echo "Where {ID} is a numeric task ID, <type> is one of: feat, fix, chore, docs, style, refactor, test, perf,"
+        echo "Where {ID} is a numeric task ID, <type> is one of: feat, fix, docs, style, refactor, test, perf,"
         echo "and <subject> starts with a capital letter and is short and descriptive."
         exit 1
     fi
@@ -35,7 +35,7 @@ elif [[ "$branch_name" =~ ^releases/.* ]]; then
         echo ""
         echo "Please use the following format:"
         echo "  Release - {ID}: <type>: <subject>"
-        echo "Where {ID} is a numeric release ID, <type> is one of: feat, fix, chore, docs, style, refactor, test, perf,"
+        echo "Where {ID} is a numeric release ID, <type> is one of: major, minor, patch,"
         echo "and <subject> starts with a capital letter and is short and descriptive."
         exit 1
     fi
@@ -46,7 +46,7 @@ elif [[ "$branch_name" =~ ^hotfix/.* || "$branch_name" =~ ^hotfixes/.* ]]; then
         echo ""
         echo "Please use the following format:"
         echo "  Hotfix - {ID}: <type>: <subject>"
-        echo "Where {ID} is a numeric hotfix ID, <type> is one of: feat, fix, chore, docs, style, refactor, test, perf,"
+        echo "Where {ID} is a numeric hotfix ID, <type> is one of: feat, patch,"
         echo "and <subject> starts with a capital letter and is short and descriptive."
         exit 1
     fi
