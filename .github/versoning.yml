@@ -3,7 +3,6 @@ name: "$(Date:yyyyMMdd)-Automatic semantic versioning"
 on:
   push:
     branches:
-      - main
       - 'features/*'
       - 'hotfix/*'
       - 'releases/*'
