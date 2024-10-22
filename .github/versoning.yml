@@ -12,7 +12,9 @@ on:
       - 'features/*'
       - 'hotfix/*'
       - 'releases/*'
-
+pool: 
+  vmImage: ubuntu-latest
+  
 jobs:  
     steps:
       - checkout: self
