@@ -5,7 +5,7 @@ tag-prefix: '[vV]'
 
 branches:
   main:
-    regex: ^master$|^main$
+    regex: ^main$
     mode: ContinuousDelivery
     tag: ''
     increment: Patch # Increment patch version
