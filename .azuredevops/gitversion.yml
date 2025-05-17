@@ -1,5 +1,5 @@
 next-version: 1.0.0
-mode: ContinuousDelivery
+mode: ContinuousDeployment
 increment: Inherit
 tag-prefix: '[vV]'
 

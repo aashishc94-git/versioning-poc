@@ -1,0 +1,58 @@
+// We want to ontroduce git versioning
+
+Enviorments
+blue / green (where blue is  always active)
+
+Dev enviorment (each blue / green)
+dev
+Stage 
+Prod 
+
+Stages/ Starting brnaches :
+dev
+release 
+stage
+prod
+
+Scenarios 
+Majour release  
+Minor releases
+bug fixes 
+hot fixes 
+
+Branch flow
+Q How to update version and code in dev ?(back merge perform)
+Happy scenrio for Major releases
+dev(2.0.0) -> Release(2.1.0) -> stage(2.1.0) -> main (2.1.0)
+                   |
+                   bug fix
+
+Happy scenrio for Minor releases
+Q Multiple merges to the dev branch when merging feture branches back?
+Q If we have biggers fetures / many people working on same feature and feature divided inot tasks 
+  a Do we have patch or minor?
+  b At what story point do we create a task for feture ?
+  c Do we increment feature when task is merged?
+dev(1.0.0) -> Release(1.1.0) -> stage(1.1.0) -> main (1.1.0)
+    |
+    fetaure/ 1.1.0-ops , fetaure/ 1.1.0-prog
+                              |
+                              task/ 1.1.1-task123
+Have a bug at staging level 
+dev(1.1.0) -> Release(1.2.0) -> stage(1.2.0) -> main (1.2.0)
+                 |
+                 bug fix
+
+Q How to test hot fix and where to create branch from durink beta testing on stage or during future release ?
+
+dev(1.1.0) -> Release(1.2.0) -> stage(1.2.0) -> main (1.2.0)
+|                |                 
+             Hot fix 
+|
+dev(1.2.0) -> Release(1.3.0)
+
+**Q** If, release is merget to stage and then we have to do a hot fix on prod?
+dev(1.2.0) -> Release(1.3.0) -> stage(1.3.0)
+                                
+                                 
+AT the end of every release grafana dashboard should be automatically updated as part of existing ot new pipleine?

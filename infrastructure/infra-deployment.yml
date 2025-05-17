@@ -14,7 +14,7 @@ parameters:
   - "prod"
 
 variables:
- - template: ${{format('../../env/{0}/config.yml', parameters.enviroment) }}
+ - template: ${{format('../../env/{0}/config-{1}.yml', parameters.enviroment,param.) }}
  - name: paramsJSON
    value: ${{format('../../env/{0}/params-infra.json', parameters.enviroment) }}
 
@@ -32,12 +32,13 @@ stages:
        - task: AzureCli@2
          name: Linting
          displayName: Linting
+         condition
          inputs:
           azureSubscription: $(serviceConnectionName)
           scriptType: 'bash'
           scriptLocation: 'inlineScript'
           inlineScript: |
-           az bicep build --file ../../bicep/main/main-infra.bicep
+           az bicep build --file ../../bicep/main/main-lb-infra.bicep
 
  - stage: Validate 
    displayName: Run Validate
