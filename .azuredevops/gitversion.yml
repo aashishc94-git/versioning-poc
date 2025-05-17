@@ -1,5 +1,7 @@
 next-version: 1.0.0
 mode: ContinuousDeployment
+ignore:
+  sha: []
 increment: Inherit
 tag-prefix: '[vV]'
 
